@@ -6,7 +6,9 @@ Today I'm going to show you how to do this, using a simple API server in Python 
 
 Video: https://youtu.be/zkMRWDQV4Tg.
 
-## Usage
+## Installation & Usage
+
+Open the Terminal & Create Virtual Environment
 
 ```
 python -m venv venv

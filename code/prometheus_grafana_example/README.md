@@ -11,6 +11,12 @@ docker container dun -d -p 8050:80 diamol/ch09-todo-list
 
 In practise, when building the app, you needs to develop the Promethus metrics logging, for example [Python](https://www.youtube.com/watch?v=HzEiRwJP6ag) app, along with the source code of the app before dockerizing the image.
 
+## The goal of this tutorial
+
+- Write a **Docker Compose file** that you can use to run the app, which also starts a custom Prometheus container and a custom Grafana container.
+- The **Prometheus container** should already be configured to scrape metrics from the to-do list app.
+- The **Grafana container** should be configured with a dashboard to show three key metrics from the app: number of tasks created, total number of HTTP requests processed, and number of HTTP requests currently being processed.
+
 ## The custom Prometheus image
 
 Prometheus just needs to be configured to scrape the `todo-list` application.

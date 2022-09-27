@@ -15,3 +15,4 @@ COPY app.js .
 
 # Specifies the command to run when Docker starts a container from the image.
 CMD ["node", "/web-ping/app.js"]
+

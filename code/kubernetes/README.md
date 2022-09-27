@@ -18,7 +18,13 @@
 
 #### `kubectl get`
 
-##### JSON Output Format
+##### `svc` service
+
+- `kubectl get svc <name-of-the-service` check the Service details
+
+##### Output Format
+
+###### JSON Output Format
 
 - Syntax: `jsonpath='{.items[*].}'`
 
@@ -30,7 +36,7 @@ k get pods -A -l app=sleep-1 -o jsonpath='{.items[*].metadata.name}'
 k get pod -l app=sleep-2 --output jsonpath='{.items[0].status.podIP}'
 ```
 
-##### Column Output Format
+###### Column Output Format
 
 - Syntax: `custom-columns=COLUMN1_NAME:metadata.name,COLUMN2_NAME:metadata.labels`
 

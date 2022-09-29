@@ -7,6 +7,7 @@
 #### Command Flag
 
 - `-A` means All
+- `-l` is label
 - `-o`, `--output`: output from the commands
 
 #### `kubectl describe`
@@ -42,5 +43,10 @@ k get pod -l app=sleep-2 --output jsonpath='{.items[0].status.podIP}'
 
 ```Shell
 # list all Pods, showing the Pod name and labels:
-kubectl get pods -o custom-columns=NAME:metadata.name,LABELS:metadata.labels
+kubectl get pods -o custom-columns=NAME:metadata.name,LABELS:metadata.labels,POD_IP:status.podIP
 ```
+
+#### Interactive Shell Command with Pod
+
+- `kubectl exec -it pod_name sh` to open the interactive shell
+- `kubectl exec deploy/pod_name -- sh -c 'nslookup numbers-api | tail -n 5'` to send Shell command to the Pod

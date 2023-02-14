@@ -1,5 +1,9 @@
 # Docker & Kubernetes 101
-
+## Command
+### Container
+- Clear container: `docker container rm -f $(docker container ls -aq)`
+- Run container: `docker container run -d -p computer_port:docker_port --name container_name link_to_container_at_docker_hub`
+  - `-d`, `--detach`: run in the background 
 ## Docker Compose
 
 - Example: [Link](./code/docker_compose_example)

@@ -7,6 +7,7 @@
 ## Docker Compose Command
 - Example: [Link](./code/docker_compose_example)
 - To start an app (in detach mode): `docker-compose up -d`
+  - Start a specific component: `docker-compose up <name_of_component>`  
 - To check the log of an app: `docker-compose logs`
 - To stop an app: `docker-compose down -v`
   - `-v`: to remove the volumn mounted

@@ -1,13 +1,15 @@
 # Docker & Kubernetes 101
-## Command
+## Docker Command
 ### Container
 - Clear container: `docker container rm -f $(docker container ls -aq)`
 - Run container: `docker container run -d -p computer_port:docker_port --name container_name link_to_container_at_docker_hub`
   - `-d`, `--detach`: run in the background 
-## Docker Compose
-
+## Docker Compose Command
 - Example: [Link](./code/docker_compose_example)
-
+- To start an app (in detach mode): `docker-compose up -d`
+- To check the log of an app: `docker-compose logs`
+- To stop an app: `docker-compose down -v`
+  - `-v`: to remove the volumn mounted
 ## Docker Topics
 
 ### Container Reliability with Health Check & Dependency Check

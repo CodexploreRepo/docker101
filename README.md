@@ -1,15 +1,17 @@
 # Docker & Kubernetes 101
 ## Docker Command
 ### Container
-- Clear container: `docker container rm -f $(docker container ls -aq)`
+- Remove a/all container: 
+  - `docker container rm -f $(docker container ls -aq)`
+  - `docker --rmi <name>` or `docker --rmi all`
 - Run container: `docker container run -d -p computer_port:docker_port --name container_name link_to_container_at_docker_hub`
   - `-d`, `--detach`: run in the background 
 ## Docker Compose Command
 - Example: [Link](./code/docker_compose_example)
-- To start an app (in detach mode): `docker-compose up -d`
-  - Start a specific component: `docker-compose up <name_of_component>`  
-- To check the log of an app: `docker-compose logs`
-- To stop an app: `docker-compose down -v`
+- To start an app (in detach mode): `docker compose up -d`
+  - Start a specific component: `docker compose up <name_of_component>`  
+- To check the log of an app: `docker compose logs`
+- To stop an app: `docker compose down -v` or `docker compose down --volumes`
   - `-v`: to remove the volumn mounted
 ## Docker Topics
 

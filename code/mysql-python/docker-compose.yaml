@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  mysql:
+    build: ./mysql/
+    restart: always
+    image: mysql_img
+    container_name: mysql_con
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    expose:
+      - "${DB_PORT}"
+    networks:
+      - docker_network
+    volumes:
+      - mysql_data:/var/lib/mysql
+  pythonapp:
+    build: ./python/
+    image: python_sql_connector
+    container_name: python_sql_connector
+    command: sh -c "sleep 5s ; python3 ./db_connector.py"
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+    networks:
+      - docker_network
+    depends_on:
+      - mysql
+
+networks:
+  docker_network:
+    driver: bridge
+volumes:
+  mysql_data:

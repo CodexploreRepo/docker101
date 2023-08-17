@@ -1,5 +1,20 @@
 # Python - Postgres - MySQL
 
+## Adminer
+
+Adminer is a tool for managing content in databases. It natively supports MySQL, MariaDB, PostgreSQL, SQLite, MS SQL, Oracle, Elasticsearch and MongoDB.
+
+<p align="center"><img src="../../assets/img/adminer-sql-login.png"></p>
+
+```
+# server = service name, in this case is "mysql"
+DB_USER=root
+DB_PASSWORD=root
+DB_PORT=3306
+DB_NAME=db
+
+```
+
 ## Network in Docker Compose
 
 - Compose sets up a single network for your app. Each container for a service joins the default network and is both reachable by other containers on that network, and discoverable by them at a hostname identical to the container name

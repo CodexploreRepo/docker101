@@ -1,15 +1,29 @@
 version: "3.8"
 services:
+  postgres:
+    restart: always
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    expose:
+      - 5432
+    networks:
+      - docker_network
+    volumes:
+      - ./postgres/db_init:/docker-entrypoint-initdb.d/
+      - postregs_data:/var/lib/postgresql/data
+
   mysql:
     build: ./mysql/
     restart: always
-    image: mysql_img
-    container_name: mysql_con
+    image: mysql
+    container_name: mysql
     environment:
       - MYSQL_DATABASE=${DB_NAME}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-    ports:
-      - "${DB_PORT}:${DB_PORT}"
     expose:
       - "${DB_PORT}"
     networks:
@@ -27,13 +41,25 @@ services:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
       - DB_NAME=${DB_NAME}
+      - POSTGRES_PORT=${POSTGRES_PORT}
     networks:
       - docker_network
     depends_on:
       - mysql
-
+      - postgres
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - postgres
+      - mysql
+    ports:
+      - 8080:8080
+    networks:
+      - docker_network
 networks:
   docker_network:
     driver: bridge
 volumes:
   mysql_data:
+  postregs_data:

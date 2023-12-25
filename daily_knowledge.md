@@ -1,6 +1,19 @@
-# Day 1
+# Daily Knowledge
 
-## Postgres
+## Day 2
+
+- Retrieve the command history:
+
+```shell
+history | grep "docker run"
+  725  docker run --name postgres16 -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:16.1-alpine
+  726  docker run --name postgres16 -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:16.1-alpine
+
+```
+
+## Day 1
+
+### Postgres
 
 - Access postgres container via exec: `docker exec -it <name_of_container> psql -U root`
 
@@ -23,14 +36,14 @@
 
   - Type `\q` to exit the **psql**
 
-## Docker Hub Version
+### Docker Hub Version
 
 - Syntax: `docker pull <image>:<tag>`
 - For example: postgres `docker pull postgres:16.1-alpine`
   - `16.1`: version
   - `alpine`: is a Small. Simple. Secure. Linux
 
-## Secrect Binary File Handling
+### Secrect Binary File Handling
 
 - Encoding & Decoding the secrect binary file (e.g. private key)
   - Encoding: The output of below command can be stored in the secrect manager, so later we can load into the docker file as the environmental variable
@@ -50,13 +63,13 @@ echo $ENCODED_BASE64_STRING | base64 -d > id_rsa.pem
 chmod 600 id_rsa.pem # give READ WRITE access to the owner
 ```
 
-## Dockerfile
+### Dockerfile
 
 - `WORKDIR` to change the working directory inside the docker image
 - `COPY`
   - Entire folder: `COPY . /opt/docker101/` copy all the files available in current folder into `/opt/docker101/`
 
-### `RUN` vs (`ENTRYPOINT` & `CMD`)
+#### `RUN` vs (`ENTRYPOINT` & `CMD`)
 
 - `RUN` to execute the Linux Command before the entrypoint of the Docker container
 
@@ -79,12 +92,12 @@ chmod 600 id_rsa.pem # give READ WRITE access to the owner
     - `CMD ["/bin/sh", "opt/docker101/scripts/start.sh"]`
     - `CMD exec opt/docker101/scripts/start.sh`
 
-## Docker Compose
+### Docker Compose
 
 - `docker-compose down --volumes` remove the volumes which were set up to store the database.
 - View the **log** to inspect what happening when initialising the container
 
-### Network in Docker Compose
+#### Network in Docker Compose
 
 - Compose sets up a single network for your app. Each container for a service joins the default network and is both reachable by other containers on that network, and discoverable by them at a hostname identical to the container name
 
@@ -110,7 +123,7 @@ Each container can now look up the hostname `web` or `db` and get back the appro
 
 - For example, `web`’s application code could connect to the URL `postgres://db:5432` and start using the Postgres database.
 
-#### Distinction between `HOST_PORT` and `CONTAINER_PORT`
+##### Distinction between `HOST_PORT` and `CONTAINER_PORT`
 
 - For `db`, the `HOST_PORT` is `8001` and the container port is `5432` (postgres default). Networked service-to-service communication uses the `CONTAINER_PORT`. When `HOST_PORT` is defined, the service is accessible outside the swarm as well.
 
@@ -119,7 +132,7 @@ Each container can now look up the hostname `web` or `db` and get back the appro
 - From the host machine, the connection string would look like `postgres://{DOCKER_IP}:8001`
   - For example `postgres://localhost:8001` if your container is running locally.
 
-## Postgres
+### Postgres
 
 - Error `PostgreSQL Database directory appears to contain a database; Skipping initialization`
   - &#8594; need to proactively remove the volumes which were set up to store the database.

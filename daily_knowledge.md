@@ -1,5 +1,28 @@
 # Day 1
 
+## Postgres
+
+- Access postgres container via exec: `docker exec -it <name_of_container> psql -U root`
+
+  - Note: if access the running container via localhost, so the password is not required
+  - `psql` running postgres sql commands
+  - `-U root` running as root user
+
+  ```shell
+  docker exec -it postgres16 psql -U root
+  -------------------------------
+  psql (16.1)
+  Type "help" for help.
+
+  root: select now();
+              now
+  -------------------------------
+  2023-12-23 14:58:15.391689+00
+  (1 row)
+  ```
+
+  - Type `\q` to exit the **psql**
+
 ## Docker Hub Version
 
 - Syntax: `docker pull <image>:<tag>`

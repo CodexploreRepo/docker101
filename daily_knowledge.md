@@ -1,5 +1,61 @@
 # Day 1
 
+## Docker Hub Version
+
+- Syntax: `docker pull <image>:<tag>`
+- For example: postgres `docker pull postgres:16.1-alpine`
+  - `16.1`: version
+  - `alpine`: is a Small. Simple. Secure. Linux
+
+## Secrect Binary File Handling
+
+- Encoding & Decoding the secrect binary file (e.g. private key)
+  - Encoding: The output of below command can be stored in the secrect manager, so later we can load into the docker file as the environmental variable
+
+```bash
+# encode
+# -w 0 option specifies that the output lines should not be wrapped. It means that the base64-encoded output will be in a `single line`, without line breaks.
+cat id_rsa | base64 -w 0
+```
+
+- Decoding:
+  - This is to decode the encoded base64 string into the binary output
+
+```bash
+# Decoding
+echo $ENCODED_BASE64_STRING | base64 -d > id_rsa.pem
+chmod 600 id_rsa.pem # give READ WRITE access to the owner
+```
+
+## Dockerfile
+
+- `WORKDIR` to change the working directory inside the docker image
+- `COPY`
+  - Entire folder: `COPY . /opt/docker101/` copy all the files available in current folder into `/opt/docker101/`
+
+### `RUN` vs (`ENTRYPOINT` & `CMD`)
+
+- `RUN` to execute the Linux Command before the entrypoint of the Docker container
+
+  - It is possible to combine multiple Linux command in the same `RUN`
+
+    ```Dockerfile
+    RUN mv nlp_ver1.zip /opt/docker101/data/model/ && \
+        pwd && ls -ltr && \
+        unzip /opt/docker101/data/model/nlp_ver1.zip -d /opt/docker101/data/model/ && \
+        rm -rf /opt/docker101/data/model/nlp_ver1.zip
+    ```
+
+  - For example:
+    - `RUN chmod -R 777 /opt/app-root/` applying the read, write, and execute permissions for the owner, group, and others to all files and subdirectories within `/opt/app-root/`
+    - `RUN mkdir -p /opt/docker101/` creating the folder
+
+- `ENTRYPOINT` & `CMD` to start the container
+  - For example:
+    - `ENTRYPOINT ["tail", "-f", "/dev/null"]`
+    - `CMD ["/bin/sh", "opt/docker101/scripts/start.sh"]`
+    - `CMD exec opt/docker101/scripts/start.sh`
+
 ## Docker Compose
 
 - `docker-compose down --volumes` remove the volumes which were set up to store the database.

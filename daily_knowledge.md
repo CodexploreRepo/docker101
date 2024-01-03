@@ -11,6 +11,65 @@ history | grep "docker run"
 
 ```
 
+### Pull an image by digest (immutable identifier) `name@digest`
+
+- A common thing that happens with a `tag` is that it could be reused.
+  - For example an image pulled using `golang:latest` today may be completely different from an image pulled in 6 months.
+  - Tags that look like version numbers can have the same behavior. There is no guarantee that an image pulled using `golang:1.17.1` today (on say `linux/amd64`) will be the same when pulled 6 months later (again on `linux/amd64`).
+  - If you pull an image specifying the **digest**, you have a guarantee that the image you’re using is always the same.
+- To know the digest of an image, pull the image first. Let's pull the latest `ubuntu:22.04` image from Docker Hub:
+
+```shell
+docker pull ubuntu:22.04
+
+22.04: Pulling from library/ubuntu
+125a6e411906: Pull complete
+Digest: sha256:26c68657ccce2cb0a31b330cb0be2b5e108d467f641c62e13ab40cbec258c68d # digest
+Status: Downloaded newer image for ubuntu:22.04
+docker.io/library/ubuntu:22.04
+```
+
+- Docker prints the digest of the image after the pull has finished. In the example above, the digest of the image is: `sha256:26c68657ccce2cb0a31b330cb0be2b5e108d467f641c62e13ab40cbec258c68d`
+- Pull an image by a digest
+
+```shell
+docker pull ubuntu@sha256:26c68657ccce2cb0a31b330cb0be2b5e108d467f641c62e13ab40cbec258c68d
+```
+
+- Digest can also be used in the `FROM` of a **Dockerfile**, for example:
+
+```Dockerfile
+FROM ubuntu@sha256:26c68657ccce2cb0a31b330cb0be2b5e108d467f641c62e13ab40cbec258c68d
+```
+
+### Docker Image Layers
+
+```shell
+docker image pull debian
+
+Using default tag: latest
+latest: Pulling from library/debian
+e756f3fdd6a3: Pull complete # image layer
+Digest: sha256:3f1d6c17773a45c97bd8f158d665c9709d7b29ed7917ac934086ad96f92e4510
+Status: Downloaded newer image for debian:latest
+docker.io/library/debian:latest
+```
+
+- Docker images can consist of multiple layers.
+  - In the example above, the image consists of a single layer: `e756f3fdd6a3`.
+- Layers can be reused by images.
+  - For example, the debian:bookworm image shares its layer with the `debian:latest`, which is `e756f3fdd6a3`
+  - Pulling the `debian:bookworm` image therefore **only pulls its metadata**, but not its layers, because the layer `e756f3fdd6a3` is already present locally:
+
+```shell
+docker image pull debian:bookworm
+
+bookworm: Pulling from library/debian
+Digest: sha256:3f1d6c17773a45c97bd8f158d665c9709d7b29ed7917ac934086ad96f92e4510
+Status: Downloaded newer image for debian:bookworm
+docker.io/library/debian:bookworm
+```
+
 ## Day 1
 
 ### Postgres

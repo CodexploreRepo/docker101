@@ -12,6 +12,31 @@
 | `docker logs <container_name/id>`                      | get the container's log                                                                                           |
 | `docker exec -it <container_name> /bin/sh`             | access Linux Shell                                                                                                |
 
+- `docker manifest` manage Docker image manifests and manifest lists
+  - `docker manifest inspect` display an image manifest, or manifest list
+
+```shell
+docker manifest inspect --verbose golang:1.17.1
+
+# sample output
+[
+  {
+    "Ref": "docker.io/library/golang:1.17.1@sha256:232a180dbcbcfa7250917507f3827d88a9ae89bb1cdd8fe3ac4db7b764ebb25a",
+    "Descriptor": {
+      "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+      "digest": "sha256:232a180dbcbcfa7250917507f3827d88a9ae89bb1cdd8fe3ac4db7b764ebb25a", # digest
+      "size": 1796,
+      "platform": {
+        "architecture": "amd64",    # arch
+        "os": "linux"               # os
+      }
+    },
+    .
+    .
+    .
+
+```
+
 ### `docker exec`
 
 - `docker exec` runs a new command in a running container.

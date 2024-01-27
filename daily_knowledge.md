@@ -8,6 +8,31 @@
 - Docker **client**: talks to the Docker **daemon**, which does the heavy lifting of building, running, and distributing your Docker containers.
   - Another Docker client is Docker **Compose**, that lets you work with applications consisting of a set of containers.
 
+#### Docker Daemon `dockerd`
+
+- The Docker daemon (`dockerd`) listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes.
+- A daemon can also communicate with other daemons to manage Docker services.
+
+##### Daemon’s socket `/var/run/docker.sock`
+
+- Reference: [var/run/docker.sock](https://www.educative.io/answers/var-run-dockersock)
+- By default, a Docker daemon on a Docker platform listens on the `/var/run/docker.sock` Unix socket.
+- It is also a tool used to communicate with the Docker daemon from within a container.
+  - Note: containers need to **bind mount** the `/var/run/docker.sock` file.
+
+##### Bind mounting the daemon’s socket into the container
+
+- Mounting the Docker daemon socket gives the control of the daemon to the container.
+- Note: this process should only be used with trusted containers when necessary.
+  - For example: Jenkins in container can bind mount with the daemon's socket, so that the Jenkins container can build the docker images
+
+### Jenkins: setting up Jenkins in Docker to run Docker
+
+- To set up Jenkins in Docker to be able to run Docker (specifically: build, run, and push an image):
+  - Step 1: Create a custom Jenkins Docker image from the official `jenkins` image + install Docker CLI
+  - Step 2: bind-mount the container to the host system daemon
+    - To do this, connect the Docker CLI in the Jenkins container to the Docker daemon on the host machine by bind mounting the **daemon’s socket** into the container with the `-v` flag. When running the image add this argument: `/var/run/docker.sock:/var/run/docker.sock`.
+
 ## Day 2
 
 - Retrieve the command history:

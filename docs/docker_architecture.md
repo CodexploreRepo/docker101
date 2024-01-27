@@ -10,15 +10,23 @@
 
 <p align="center"><img width=400 src="../assets/img/docker-architecture.png"/></p>
 
-### Docker Desktop
-
-- Docker Desktop is an easy-to-install application
-- Docker Desktop includes the Docker daemon (`dockerd`), the Docker client (`docker`), Docker Compose, Docker Content Trust, Kubernetes, and Credential Helper.
-
 ### Docker Daemon `dockerd`
 
 - The Docker daemon (`dockerd`) listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes.
 - A daemon can also communicate with other daemons to manage Docker services.
+
+#### Daemon’s socket `/var/run/docker.sock`
+
+- Reference: [var/run/docker.sock](https://www.educative.io/answers/var-run-dockersock)
+- By default, a Docker daemon on a Docker platform listens on the `/var/run/docker.sock` Unix socket.
+- It is also a tool used to communicate with the Docker daemon from within a container.
+  - Note: containers need to **bind mount** the `/var/run/docker.sock` file.
+
+#### Bind mounting the daemon’s socket into the container
+
+- Mounting the Docker daemon socket gives the control of the daemon to the container.
+- Note: this process should only be used with trusted containers when necessary.
+  - For example: Jenkins in container can bind mount with the daemon's socket, so that the Jenkins container can build the docker images
 
 ### Docker Client
 
@@ -30,3 +38,8 @@
 - Note: The Docker client can communicate with more than one daemon.
 
 #### `docker compose`
+
+### Docker Desktop
+
+- Docker Desktop is an easy-to-install application
+- Docker Desktop includes the Docker daemon (`dockerd`), the Docker client (`docker`), Docker Compose, Docker Content Trust, Kubernetes, and Credential Helper.

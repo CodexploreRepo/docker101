@@ -1,5 +1,13 @@
 # Daily Knowledge
 
+## Day 3
+
+### Docker Architecture
+
+- Docker uses a **client-server** architecture.
+- Docker **client**: talks to the Docker **daemon**, which does the heavy lifting of building, running, and distributing your Docker containers.
+  - Another Docker client is Docker **Compose**, that lets you work with applications consisting of a set of containers.
+
 ## Day 2
 
 - Retrieve the command history:

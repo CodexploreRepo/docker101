@@ -10,12 +10,17 @@
 
 <p align="center"><img width=400 src="../assets/img/docker-architecture.png"/></p>
 
-### Docker Daemon `dockerd`
+### Docker Desktop
 
-### Docker Client
+- Docker Desktop is an easy-to-install application
+- Docker Desktop includes the Docker daemon (`dockerd`), the Docker client (`docker`), Docker Compose, Docker Content Trust, Kubernetes, and Credential Helper.
+
+### Docker Daemon `dockerd`
 
 - The Docker daemon (`dockerd`) listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes.
 - A daemon can also communicate with other daemons to manage Docker services.
+
+### Docker Client
 
 #### `docker`
 

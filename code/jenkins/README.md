@@ -24,4 +24,4 @@ USER jenkins
 
 ### Enabling the use of Docker daemon in the Jenkins container
 
-- To do this, connect the Docker CLI in the Jenkins container to the Docker daemon on the host machine by bind mounting the **daemon’s socket** into the container with the `-v` flag. When running the image add this argument: `/var/run/docker.sock:/var/run/docker.sock`.
+- To do this, connect the Docker CLI in the Jenkins container to the Docker daemon on the host machine by bind mounting the **daemon’s socket** into the container with the `-v` flag. When running the image add this argument: `/var/run/docker.sock:/var/run/docker.sock`

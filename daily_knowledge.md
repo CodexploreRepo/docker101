@@ -2,6 +2,44 @@
 
 ## Day 3
 
+### Image & Container OS information
+
+- `docker manifest inspect` display an image manifest, or manifest list
+
+```shell
+docker manifest inspect --verbose golang:1.17.1
+
+# sample output
+[
+  {
+    "Ref": "docker.io/library/golang:1.17.1@sha256:232a180dbcbcfa7250917507f3827d88a9ae89bb1cdd8fe3ac4db7b764ebb25a",
+    "Descriptor": {
+      "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+      "digest": "sha256:232a180dbcbcfa7250917507f3827d88a9ae89bb1cdd8fe3ac4db7b764ebb25a", # digest
+      "size": 1796,
+      "platform": {
+        "architecture": "amd64",    # arch
+        "os": "linux"               # os
+      }
+    },
+```
+
+- Run the docker container in the interactive mode & `cat /etc/os-release`
+
+```shell
+docker run -ti mlflow-server:2.9.2 bash
+root@c40b84e986bd:/mlflow# cat /etc/os-release
+PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"
+NAME="Debian GNU/Linux"
+VERSION_ID="12"
+VERSION="12 (bookworm)"
+VERSION_CODENAME=bookworm
+ID=debian
+HOME_URL="https://www.debian.org/"
+SUPPORT_URL="https://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+```
+
 ### Docker Architecture
 
 - Docker uses a **client-server** architecture.

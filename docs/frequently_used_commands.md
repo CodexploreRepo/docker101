@@ -21,12 +21,12 @@
 | `docker stop <container_name/id>`                                                                                                                  | stop a running container                                                                                                                                                                                                        |
 | `docker start <container_name/id>`                                                                                                                 | to start the stopped container without specify flags or env variables if the container is still in `docker ps -a`                                                                                                               |
 | Run Container                                                                                                                                      |                                                                                                                                                                                                                                 |
-| `docker run --help`                                                                                                                                | o read the document of docker run                                                                                                                                                                                               |
+| `docker run --help`                                                                                                                                | to read the document of docker run                                                                                                                                                                                              |
 | `docker run -d -p 5002:5000 --name mlflow mlflow-server:2.9.2`                                                                                     | - `-d` detach mode<br>- `p 5002:5000` port forward the local port 5000 to 5002 (client outside will access via port 5002, and it will be mapped to the port 5000 inside docker)<br>- `--name` to set the name for the container |
 | Debug Running Container                                                                                                                            |                                                                                                                                                                                                                                 |
 | `docker logs <container_name/id>`                                                                                                                  | :star: get the container's running log                                                                                                                                                                                          |
 | `docker inspect <container_name/id>`<br>Format output & specific type: `docker inspect --format '{{json .State.Health }}' mlflow_server_container` | :star: return low-level information on Docker objects (include the health check logs)                                                                                                                                           |
-| `docker run -ti <container_name> bash`                                                                                                             | run the image in the interactive mode and access with `bash` shell                                                                                                                                                              |
+| `docker run -ti <image_name> bash`                                                                                                                 | run the image in the interactive mode and access with `bash` shell                                                                                                                                                              |
 | `docker exec -it <container_name> /bin/sh`<br>`docker exec -it <container_name> bash`                                                              | Directly go in the running container with `sh` shell or `bash` shell                                                                                                                                                            |
 | Clear Up                                                                                                                                           |                                                                                                                                                                                                                                 |
 | `docker system prune`                                                                                                                              | Remove all unused containers, networks, images (both dangling and unused), and optionally, volumes.                                                                                                                             |
@@ -81,10 +81,6 @@ docker manifest inspect --verbose golang:1.17.1
         "os": "linux"               # os
       }
     },
-    .
-    .
-    .
-
 ```
 
 ### `docker exec`
@@ -108,9 +104,25 @@ docker manifest inspect --verbose golang:1.17.1
 
   /  dropdb simple_bank
   /  exit
-
   ```
 
+  - To get the os information of the image
+
+  ```shell
+  docker run -ti mlflow-server:2.9.2 bash
+  root@c40b84e986bd:/mlflow# cat /etc/os-release
+  PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"
+  NAME="Debian GNU/Linux"
+  VERSION_ID="12"
+  VERSION="12 (bookworm)"
+  VERSION_CODENAME=bookworm
+  ID=debian
+  HOME_URL="https://www.debian.org/"
+  SUPPORT_URL="https://www.debian.org/support"
+  BUG_REPORT_URL="https://bugs.debian.org/"
+  ```
+
+-
 - Access other application's CLI via exec:
   - Ex1: `docker exec -it <name_of_container> psql -U root` this is to open the postgres CLI via `psql` command
   - Ex2: `docker exec -it postgres16 createdb --username=root --owner=root simple_bank` this is to create a new db called `simple_bank` via `createdb` command

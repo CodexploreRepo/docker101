@@ -42,10 +42,15 @@
 
 ### Detailed Command Usage
 
+#### `docker ps`
+
 - `docker ps -a | awk 'NR>1 {print $1}'` to list down all the container_id
   - `NR>1` number of row > 1, to ignore the first row, which is CONTAINER_ID
   - `{print $1}` to select only the first column
 - :star: `docker ps -a | awk 'NR>1 {print $1}' | xargs docker stop` to stop all the containers
+
+#### `docker inspect`
+
 - `docker inspect`
 
   - inspect image
@@ -102,6 +107,8 @@
                       },
   ```
 
+#### `docker manifest`
+
 - `docker manifest` manage Docker image manifests and manifest lists
   - `docker manifest inspect` display an image manifest, or manifest list
 
@@ -123,7 +130,7 @@ docker manifest inspect --verbose golang:1.17.1
     },
 ```
 
-### `docker exec`
+#### `docker exec`
 
 - `docker exec` runs a new command in a running container.
   - `-it` `--interactive` and `--tty`

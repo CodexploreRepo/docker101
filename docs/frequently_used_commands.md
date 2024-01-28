@@ -4,9 +4,12 @@
 
 ### `docker image`
 
-| Command         | Description                    |
-| --------------- | ------------------------------ |
-| `docker images` | list down all available images |
+| Command                                                                                                      | Description                                                                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `docker images`                                                                                              | list down all available images                                                                                                                                      |
+| `docker build -t <your_docker_hub_id>/mlflow-server:2.9.2 -f Dockerfile . --build-arg MLFLOW_VERSION=2.9.2 ` | `your_docker_hub_id` to push to docker hub if required<br>`.` means current folder<br>`--build-arg` is the pass the arg as define in Dockerfile`ARG MLFLOW_VERSION` |
+
+- [Dive](https://github.com/wagoodman/dive) to inspect layers
 
 ### `docker container`
 
@@ -17,10 +20,16 @@
 |                                                                                                                                                    |                                                                                                                   |
 | `docker stop <container_name/id>`                                                                                                                  | stop a running container                                                                                          |
 | `docker start <container_name/id>`                                                                                                                 | to start the stopped container without specify flags or env variables if the container is still in `docker ps -a` |
-|                                                                                                                                                    |                                                                                                                   |
+| Debug Running Container                                                                                                                            |                                                                                                                   |
 | `docker logs <container_name/id>`                                                                                                                  | :star: get the container's running log                                                                            |
 | `docker inspect <container_name/id>`<br>Format output & specific type: `docker inspect --format '{{json .State.Health }}' mlflow_server_container` | :star: return low-level information on Docker objects (include the health check logs)                             |
 | `docker exec -it <container_name> /bin/sh`                                                                                                         | access Linux Shell                                                                                                |
+| Clear up                                                                                                                                           |                                                                                                                   |
+| `docker system prune`                                                                                                                              | Remove all unused containers, networks, images (both dangling and unused), and optionally, volumes.               |
+
+|
+
+### Detailed Command Usage
 
 - `docker inspect`
 

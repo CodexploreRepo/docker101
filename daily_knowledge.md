@@ -2,6 +2,78 @@
 
 ## Day 3
 
+### `ENTRYPOINT` vs `CMD`
+
+- `ENTRYPOINT` specifies a command that will always be executed when the container starts.
+- The `CMD` specifies arguments that will be fed to the ENTRYPOINT.
+  - If entrypoint can be omited, the default entrypoint will be `/bin/sh -c bash`
+- Case 1: Only `ENTRYPOINT` in the Dockerfile
+  - The container will run the command `echo "Hello Docker"` by default, and if you specify more argument in the `docker run` command, it will receive as well
+- Case 2: `ENTRYPOINT` + `CMD`
+  - `CMD` to **provide default arguments** to the entrypoint
+- Case 3: Only `CMD`, so the default entrypoint will be `/bin/sh -c bash`
+
+```Dockerfile
+#============================CASE 1==============================
+# FROM python:3.9-slim
+
+ENTRYPOINT ["echo", "Hello Docker"]
+
+# docker run image_name hahaha
+# returns: Hello Docker hahaha
+
+#============================CASE 2==============================
+FROM python:3.9-slim
+ENTRYPOINT ["echo"]
+CMD ["Hello Docker"]
+
+# docker run image_name hahaha
+# returns: hahaha
+
+#============================CASE 3==============================
+# Entrypoint can be omited, the default entrypoint will be /bin/sh -c bash
+# We often use this case :)
+FROM python:3.9-slim
+
+CMD ["echo", "Hello Docker"]
+
+# docker run image_name
+# returns: Hello Docker
+```
+
+### Container's Health Check
+
+- The `HEALTHCHECK` instruction specifies a command for Docker to run inside the container to check if your app is healthy
+- The health check makes an HTTP call to the `/health` endpoint, which the API provides to test if the app is healthy.
+  - Using the `-f` or `--fail` parameter means the `curl` command will pass the status code on to Docker
+    - If the request succeeds, it returns the number `0`, which Docker reads as a successful check.
+    - If it fails, it returns **a number other than 0**, which means the health check failed.
+
+```YAML
+healthcheck:
+  test: ["CMD", "curl", "-f", "http://localhost"]
+  interval: 1m30s
+  timeout: 10s
+  retries: 3
+  start_period: 2m
+```
+
+- Specify `test`
+  - `CMD`: must be a list of commands `["CMD", "curl", "-f", "http://localhost"]`
+  - `CMD-SHELL`: must be a command string `["CMD-SHELL", "curl -f http://localhost || exit 1"]`
+- `interval` is the time between checks--in this case five seconds.
+- `timeout` is how long the check should be allowed to run before it’s considered a failure.
+- `retries` is the number of consecutive failures allowed before the container is flagged as unhealthy.
+- `start_period` is the amount of time to wait before triggering the health check, which lets you give your app some startup time before health checks run.
+
+### Dockerfile
+
+#### `apt-get`
+
+- When there are multiple apps needed to install via `apt-get` and require the answer YES, we should place the `-y` flag before `install`
+- WORKING: `apt-get -y install curl libpq-dev gcc`
+- NOT WORKING: `apt-get install -y curl libpq-dev gcc`, only working if there is 1 app to install `apt-get install -y iputils-ping`
+
 ### Image & Container OS information
 
 - `docker manifest inspect` display an image manifest, or manifest list

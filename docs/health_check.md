@@ -39,5 +39,33 @@ services:
       timeout: 10s
       retries: 5
       start_period: 10s
+```
 
+    - Checking the containers "STATUS"
+
+```shell
+docker ps
+CONTAINER ID   IMAGE                        COMMAND                  CREATED         STATUS                   PORTS                    NAMES
+92ca97a7c83b   mlflow_nginx                 "/docker-entrypoint.…"   2 minutes ago   Up 2 minutes (healthy)   0.0.0.0:8080->80/tcp     mlflow_nginx_container
+aba908dc15d5   haquan/mlflow_server:2.9.2   "/bin/sh -c 'mlflow …"   2 minutes ago   Up 2 minutes (healthy)   0.0.0.0:5001->5000/tcp   mlflow_server_container
+8838b36e299d   postgres:latest              "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes (healthy)   0.0.0.0:5432->5432/tcp   postgres_container
+```
+
+## Health Check Syntax for Docker Compose
+
+- Specify `test`
+  - `CMD`: must be a list of commands `["CMD", "curl", "-f", "http://localhost"]`
+  - `CMD-SHELL`: must be a command string `["CMD-SHELL", "curl -f http://localhost || exit 1"]`
+- `interval` is the time between checks--in this case five seconds.
+- `timeout` is how long the check should be allowed to run before it’s considered a failure.
+- `retries` is the number of consecutive failures allowed before the container is flagged as unhealthy.
+- `start_period` is the amount of time to wait before triggering the health check, which lets you give your app some startup time before health checks run.
+
+```YAML
+healthcheck:
+  test: ["CMD", "curl", "-f", "http://localhost"]
+  interval: 1m30s
+  timeout: 10s
+  retries: 3
+  start_period: 2m
 ```

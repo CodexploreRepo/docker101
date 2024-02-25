@@ -16,12 +16,14 @@
 ```Dockerfile
 #============================CASE 1==============================
 # FROM python:3.9-slim
-
+# Example 1:
 ENTRYPOINT ["echo", "Hello Docker"]
-
 # docker run image_name hahaha
 # returns: Hello Docker hahaha
 
+# Example 1:
+ENTRYPOINT ["python", "ingestion.py"]
+# docker run image_name --table yellow_taxi --db_host nytaxi_db
 #============================CASE 2==============================
 FROM python:3.9-slim
 ENTRYPOINT ["echo"]

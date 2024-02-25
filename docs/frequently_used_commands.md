@@ -170,7 +170,12 @@ docker manifest inspect --verbose golang:1.17.1
   ```
 
 - Access other application's CLI via exec:
-  - Ex1: `docker exec -it <name_of_container> psql -U root` this is to open the postgres CLI via `psql` command
-  - Ex2: `docker exec -it postgres16 createdb --username=root --owner=root simple_bank` this is to create a new db called `simple_bank` via `createdb` command
+  - Ex1 `docker exec -it <name_of_container> psql -U root` this is to open the postgres CLI via `psql` command
+  - Ex2 `docker exec -it postgres16 createdb --username=root --owner=root simple_bank` this is to create a new db called `simple_bank` via `createdb` command
 
 ## Docker Compose
+
+- To start all services: `docker compose up -d`
+- To start one service: `docker compose up -d service_a`
+- To re-build the images: `docker compose build`
+- To get the log available: `docker compose logs`

@@ -41,7 +41,7 @@ services:
       start_period: 10s
 ```
 
-    - Checking the containers "STATUS"
+- Checking the containers "STATUS"
 
 ```shell
 docker ps
